@@ -1,12 +1,16 @@
 - if notice
   aside#notice = notice
 
-h1 = 'Your Pragmatic Catalog'
+h1 Your Pragmatic Catalog
 ul.catalog
-  - @products.each do |product|
-    li
-      = image_tag(product.image_url)
-      h2 = product.title
-      p
-       = sanitize(product.description)
-      .price = product.price
+  - cache @products do
+    - @products.each do |product|
+      - cache product do
+        li
+          = image_tag(product.image_url)
+          h2 = product.title
+          p
+          = sanitize(product.description)
+          .price 
+            = number_to_currency(product.price) 
+            = button_to 'Add to Cart', line_items_path(product_id: product)
