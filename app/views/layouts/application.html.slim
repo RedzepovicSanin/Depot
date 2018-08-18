@@ -14,7 +14,7 @@ html
     section.content
       nav.side_nav
         #cart class='carts'
-          = render @cart
+          = render_if @cart && @cart.line_items.any?, @cart
         ul
           li 
             a href='/' Home
